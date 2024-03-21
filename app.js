@@ -17,13 +17,19 @@ app.use(express.json());
 app.use(express.urlencoded ({extended: false}));
 app.use(cors());
 
-// use routes
-app.use('/recipes', router)
+
 
 const PORT = process.env.PORT || 5050;
 
 // make database connection 
-await mongoose.connect(process.env.MONGO_URI)
+try {
+  await mongoose.connect(process.env.MONGO_URI)
+} catch (error) {
+  console.log(error)
+}
+
+// use routes
+app.use('/recipes', router)
 
 // Listen for incoming requests
 app.listen(PORT, () => {
