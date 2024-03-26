@@ -5,7 +5,11 @@ export const addRecipe = async (req, res, next) => {
     try {
     
         // Add recipe to the database
-        const createResult = await recipeModel.create(req.body);
+        console.log(req.file);
+
+        const createResult = await recipeModel.create({...req.body, 
+            image: req.file.filename});
+
         // return response ,
         res.status(201).json(createResult);
 } catch (error) {
